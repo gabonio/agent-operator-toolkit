@@ -1,0 +1,25 @@
+# Local scratch and generated outputs
+/scratch/
+/reports/
+/artifacts/
+/local-output/
+/.playwright/
+/.playwright-cli/
+
+# macOS, Python, and JS noise
+.DS_Store
+__pycache__/
+*.pyc
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+/venv/
+/node_modules/
+/dist/
+/build/
+
+# Local generated state and ad hoc reports
+/*.report.json
+/*.local.json
+/*.tmp.json

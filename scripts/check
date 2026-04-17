@@ -1,0 +1,78 @@
+#!/usr/bin/env python3
+from __future__ import annotations
+
+import shutil
+import sys
+from pathlib import Path
+
+
+ROOT = Path(__file__).resolve().parent.parent
+REQUIRED_ASSETS = [
+    ROOT / "README.md",
+    ROOT / "AGENTS.md",
+    ROOT / "CLAUDE.md",
+    ROOT / "CODEX.md",
+    ROOT / "GEMINI.md",
+    ROOT / "CODING.md",
+    ROOT / "WORKFLOWS.md",
+    ROOT / "PERSONAS.md",
+    ROOT / ".github" / "copilot-instructions.md",
+    ROOT / "coding-standards" / "README.md",
+    ROOT / "coding-standards" / "CPP.md",
+    ROOT / "coding-standards" / "FRONTEND.md",
+    ROOT / "coding-standards" / "JAVA.md",
+    ROOT / "coding-standards" / "PYTHON.md",
+    ROOT / "coding-standards" / "SHELL.md",
+    ROOT / "templates" / "vscode" / "tasks.json.example",
+    ROOT / "scripts" / "check",
+]
+
+
+def print_header(title: str) -> None:
+    print(f"\n== {title} ==")
+
+
+def check_required_assets() -> tuple[list[Path], list[Path]]:
+    present: list[Path] = []
+    missing: list[Path] = []
+    for asset in REQUIRED_ASSETS:
+        if asset.exists():
+            present.append(asset)
+        else:
+            missing.append(asset)
+    return present, missing
+
+
+def main() -> int:
+    exit_code = 0
+
+    print_header("Toolkit Check")
+    print(f"Toolkit root: {ROOT}")
+
+    print_header("Required Tools")
+    for tool in ("git", "python3"):
+        resolved = shutil.which(tool)
+        if resolved:
+            print(f"OK: {tool} -> {resolved}")
+        else:
+            print(f"ERROR: missing required tool `{tool}`")
+            exit_code = 1
+
+    print_header("Tracked Assets")
+    present, missing = check_required_assets()
+    for asset in present:
+        print(f"OK: {asset.relative_to(ROOT)}")
+    for asset in missing:
+        print(f"ERROR: missing tracked asset {asset.relative_to(ROOT)}")
+        exit_code = 1
+
+    print_header("Summary")
+    if exit_code == 0:
+        print("OK: toolkit docs and check script are present.")
+    else:
+        print("FAIL: one or more required toolkit files or tools are missing.")
+    return exit_code
+
+
+if __name__ == "__main__":
+    sys.exit(main())
