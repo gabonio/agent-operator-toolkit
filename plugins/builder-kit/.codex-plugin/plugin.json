@@ -1,0 +1,33 @@
+{
+  "name": "builder-kit",
+  "version": "0.2.0",
+  "description": "An explicitly invoked, token-efficient harness for planning, implementing, and reviewing agent-driven software. It helps technical and non-technical users produce sustainable code through approval-gated specifications, pragmatic repository-aware standards, conditional expert lenses, safe Git workflows, and evidence-backed verification.",
+  "author": {
+    "name": "Gabriel Cruz"
+  },
+  "keywords": [
+    "agent-workflow",
+    "spec-driven-development",
+    "code-quality",
+    "architecture",
+    "git-safety"
+  ],
+  "interface": {
+    "displayName": "Builder Kit",
+    "shortDescription": "Plan and deliver sustainable agent-built software safely.",
+    "developerName": "Gabriel Cruz",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "longDescription": "An explicitly invoked, specification-driven development harness for technical and non-technical users. Builder Kit routes only relevant standards and expert lenses, protects unrelated work, enforces approval boundaries for non-trivial changes, and verifies implementation with production-minded engineering guardrails.",
+    "defaultPrompt": [
+      "Use $builder-kit to plan and build this feature safely",
+      "Use $start-new-app to design a sustainable new application",
+      "Use $adversarial-review to pressure-test this plan"
+    ]
+  },
+  "repository": "https://github.com/gabonio/agent-operator-toolkit",
+  "skills": "./skills/"
+}

@@ -1,0 +1,33 @@
+{
+  "name": "marketplace-management",
+  "version": "0.2.0",
+  "description": "Create, update, validate, and release portable Codex, Claude Code, and Gemini CLI distribution metadata.",
+  "author": {
+    "name": "Gabriel Cruz"
+  },
+  "keywords": [
+    "marketplace",
+    "plugins",
+    "validation",
+    "release",
+    "codex",
+    "gemini-cli"
+  ],
+  "repository": "https://github.com/gabonio/agent-operator-toolkit",
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Marketplace Management",
+    "shortDescription": "Maintain portable multi-agent distributions.",
+    "longDescription": "A conservative maintainer workflow for creating, updating, validating, and releasing Codex and Claude marketplace plugins plus Gemini CLI extension surfaces without drifting metadata or generated artifacts.",
+    "developerName": "Gabriel Cruz",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Use $marketplace-management to add a plugin",
+      "Use $marketplace-management to validate this marketplace"
+    ]
+  }
+}

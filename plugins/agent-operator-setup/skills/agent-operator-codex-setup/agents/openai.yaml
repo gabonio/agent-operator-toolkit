@@ -1,0 +1,6 @@
+interface:
+  display_name: "Agent Operator Codex Setup"
+  short_description: "Install or diagnose Agent Operator in Codex"
+  default_prompt: "Use $agent-operator-codex-setup to set up or diagnose Agent Operator in Codex."
+policy:
+  allow_implicit_invocation: false

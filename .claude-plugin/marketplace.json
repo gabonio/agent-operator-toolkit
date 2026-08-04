@@ -1,0 +1,66 @@
+{
+  "name": "agent-operator-toolkit",
+  "owner": {
+    "name": "Gabriel Cruz"
+  },
+  "metadata": {
+    "description": "Portable AI-assisted software development plugins",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "builder-kit",
+      "version": "0.2.0",
+      "description": "Plan, implement, verify, and adversarially review sustainable software changes.",
+      "author": {
+        "name": "Gabriel Cruz"
+      },
+      "category": "skill",
+      "tags": [
+        "agent-workflow",
+        "spec-driven-development",
+        "code-quality",
+        "architecture",
+        "git-safety"
+      ],
+      "source": "./plugins/builder-kit"
+    },
+    {
+      "name": "agent-operator-setup",
+      "version": "0.3.0",
+      "description": "Install, update, and diagnose Agent Operator in Codex, Claude Code, or Gemini CLI without overwriting unrelated user configuration.",
+      "author": {
+        "name": "Gabriel Cruz"
+      },
+      "category": "skill",
+      "tags": [
+        "claude-code",
+        "codex",
+        "gemini-cli",
+        "setup",
+        "marketplace",
+        "doctor",
+        "updates"
+      ],
+      "source": "./plugins/agent-operator-setup"
+    },
+    {
+      "name": "marketplace-management",
+      "version": "0.2.0",
+      "description": "Create, update, validate, and release portable Codex, Claude Code, and Gemini CLI distribution metadata.",
+      "author": {
+        "name": "Gabriel Cruz"
+      },
+      "category": "skill",
+      "tags": [
+        "marketplace",
+        "plugins",
+        "validation",
+        "release",
+        "codex",
+        "gemini-cli"
+      ],
+      "source": "./plugins/marketplace-management"
+    }
+  ]
+}

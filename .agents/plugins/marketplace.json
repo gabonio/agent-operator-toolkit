@@ -1,0 +1,44 @@
+{
+  "name": "agent-operator-toolkit",
+  "interface": {
+    "displayName": "Agent Operator"
+  },
+  "plugins": [
+    {
+      "name": "builder-kit",
+      "source": {
+        "source": "local",
+        "path": "./plugins/builder-kit"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools"
+    },
+    {
+      "name": "agent-operator-setup",
+      "source": {
+        "source": "local",
+        "path": "./plugins/agent-operator-setup"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools"
+    },
+    {
+      "name": "marketplace-management",
+      "source": {
+        "source": "local",
+        "path": "./plugins/marketplace-management"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools"
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+interface:
+  display_name: "Develop from Spec"
+  short_description: "Turn approved specifications into verified code"
+  default_prompt: "Use $develop-from-spec to plan and execute this non-trivial development task."
+policy:
+  allow_implicit_invocation: false

@@ -1,0 +1,6 @@
+interface:
+  display_name: "Marketplace Management"
+  short_description: "Create and validate portable plugin marketplaces"
+  default_prompt: "Use $marketplace-management to add, update, or validate marketplace plugins."
+policy:
+  allow_implicit_invocation: false

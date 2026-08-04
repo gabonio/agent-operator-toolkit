@@ -1,113 +1,166 @@
-# agent-operator-toolkit
+# Agent Operator
 
-`agent-operator-toolkit` is a reusable safety and workflow layer for AI-assisted coding.
+**A portable marketplace of professional software-development skills for Codex, Claude Code, and Gemini CLI.**
 
-It is designed to work either as a standalone repo or as a Git submodule inside personal projects. The goal is simple: give a non-developer using AI a durable set of guardrails for reading code, making small changes safely, verifying work, and keeping project-specific knowledge where it belongs.
+[![Codex](https://img.shields.io/badge/Codex-native-111827)](./README-CODEX.md)
+[![Claude Code](https://img.shields.io/badge/Claude_Code-native-D97757)](./README-CLAUDE.md)
+[![Gemini CLI](https://img.shields.io/badge/Gemini_CLI-native-4285F4)](./README-GEMINI.md)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](./LICENSE)
 
-## What This Repo Tracks
+Agent Operator gives coding agents a reusable operating system for planning, implementation, verification, and review. Install the same workflows through each agent's native extension model—without depending on an employer-specific service, proprietary review bot, or private convention.
 
-- shared operator docs:
-  - [README.md](./README.md)
-  - [AGENTS.md](./AGENTS.md)
-  - [CLAUDE.md](./CLAUDE.md)
-  - [CODEX.md](./CODEX.md)
-  - [GEMINI.md](./GEMINI.md)
-  - [CODING.md](./CODING.md)
-  - [WORKFLOWS.md](./WORKFLOWS.md)
-  - [PERSONAS.md](./PERSONAS.md)
-- lightweight language-specific guides:
-  - [coding-standards/README.md](./coding-standards/README.md)
-- AI compatibility entrypoints:
-  - [.github/copilot-instructions.md](./.github/copilot-instructions.md)
-- reusable editor templates:
-  - [templates/vscode/tasks.json.example](./templates/vscode/tasks.json.example)
-- a lightweight sanity check:
-  - [`scripts/check`](./scripts/check)
+The flagship **Builder Kit** plugin combines specification-driven development, repository-aware engineering rules, specialist review lenses, safe Git workflows, and a bounded adversarial review loop that keeps working until a change is genuinely merge-ready.
 
-This repo does not replace a project's own source code, README, tests, or architecture docs.
+## Why Agent Operator?
 
-## Instruction Files
+- **One workflow, three agents.** Codex, Claude Code, and Gemini CLI receive equivalent skills through their native distribution formats.
+- **Built for real repositories.** Skills discover local instructions, architecture, checks, and constraints before proposing changes.
+- **Review that pushes back.** The adversarial loop surfaces three or four material findings per pass, verifies them, fixes authorized issues, and reviews the complete diff again.
+- **Safe by default.** Installation, Git, GitHub, credentials, and destructive actions retain explicit authority boundaries.
+- **Portable by design.** No company names, internal commands, private infrastructure, or organization-only dependencies.
+- **A marketplace, not a monolith.** Install only the plugins you want and extend the catalog with self-contained skills.
 
-`AGENTS.md` is the canonical instruction file for this toolkit.
+## Install
 
-- Codex uses `AGENTS.md` by default
-- Cursor supports `AGENTS.md` directly
-- `CLAUDE.md` exists as a compatibility entrypoint and points back to `AGENTS.md`
-- `GEMINI.md` exists as a compatibility entrypoint and points back to `AGENTS.md`
-- `.github/copilot-instructions.md` exists for GitHub Copilot and points back to `AGENTS.md`
-- `CODEX.md` is kept as an explicit compatibility pointer so humans and tools do not invent a second Codex-specific instruction set
+Choose your agent. Each route uses that client's native marketplace or extension system.
 
-The rule is simple: keep the real instructions in one place and make every other agent-specific file defer to it.
-
-## What This Repo Avoids
-
-- business-specific workflows tied to one employer, client, or product
-- secrets, credentials, or machine-specific notes
-- vendored copies of project code
-- large one-off automation scripts that only make sense in a single workspace
-
-## Quick Start
-
-### Use it as a submodule
+### Codex
 
 ```sh
-git submodule add git@github.com:gabonio/agent-operator-toolkit.git tools/agent-operator-toolkit
+codex plugin marketplace add git@github.com:gabonio/agent-operator-toolkit.git
 ```
 
-Then treat the parent project as the source of truth for product requirements and use this toolkit for general coding guardrails.
+Restart Codex if needed, open `/plugins`, select **Agent Operator**, and install `builder-kit` or the other plugins you want.
 
-### Docs-only mode
+[Complete Codex setup, updates, and troubleshooting →](./README-CODEX.md)
 
-Use the toolkit without any extra setup:
+### Claude Code
 
-1. read [README.md](./README.md)
-2. read [CODING.md](./CODING.md)
-3. read [WORKFLOWS.md](./WORKFLOWS.md)
-4. read [AGENTS.md](./AGENTS.md)
-5. open [coding-standards/README.md](./coding-standards/README.md) only when you need language-specific guidance
-6. open [PERSONAS.md](./PERSONAS.md) only when you want role-specific prompting or outputs
+Run inside Claude Code:
 
-### Sanity check
+```text
+/plugin marketplace add gabonio/agent-operator-toolkit
+/plugin install agent-operator-setup@agent-operator-toolkit
+/plugin install builder-kit@agent-operator-toolkit
+/reload-plugins
+```
 
-To verify the toolkit itself is intact:
+[Complete Claude Code setup, scopes, updates, and troubleshooting →](./README-CLAUDE.md)
+
+### Gemini CLI
+
+Run from a terminal:
 
 ```sh
-./scripts/check
+gemini extensions install https://github.com/gabonio/agent-operator-toolkit
 ```
 
-## Suggested Layout
+Restart Gemini CLI, then run `/agent-operator:setup install` or inspect the installed capabilities with `/extensions list`, `/skills list`, and `/commands list`.
 
-One practical setup looks like this:
+[Complete Gemini CLI setup, updates, and troubleshooting →](./README-GEMINI.md)
 
-- your main project repo
-- this toolkit as a submodule such as `tools/agent-operator-toolkit`
-- local scratch/output folders that stay ignored
+## Marketplace
 
-## VS Code Preference
+| Plugin | What it gives your agent | Best for |
+| --- | --- | --- |
+| [`builder-kit`](./plugins/builder-kit) | Planning, implementation, architecture and quality lenses, verification, Git safety, and adversarial review | Building and reviewing software |
+| [`agent-operator-setup`](./plugins/agent-operator-setup) | Native installation, updating, diagnosis, and recovery for all three clients | Getting a team or machine set up |
+| [`marketplace-management`](./plugins/marketplace-management) | Scaffolding, registry synchronization, validation, and release discipline | Creating and publishing plugins |
 
-This toolkit assumes a VS Code-friendly workflow.
+### Builder Kit workflows
 
-If a project has common commands such as build, test, lint, dev, or preview, prefer exposing them through `.vscode/tasks.json` so they can be run from the editor UI instead of requiring terminal memorization. A reusable starter lives in [templates/vscode/tasks.json.example](./templates/vscode/tasks.json.example).
+| Skill | Use it when you want to… |
+| --- | --- |
+| `$builder-kit` | Route a development task through the right workflow and specialist lenses |
+| `$start-new-app` | Turn a product idea into a grounded specification and implementation plan |
+| `$develop-from-spec` | Implement an approved specification with evidence-backed verification |
+| `$adversarial-review` | Pressure-test a plan, architecture, diff, or readiness claim without changing it |
+| `$pr-review-loop` | Review, fix, verify, and repeat until the current change is merge-ready or reaches a clear stop condition |
 
-## Documentation Layout
+Client interfaces may display skill names differently, but the underlying workflow and safety rules remain aligned.
 
-- [README.md](./README.md): what this toolkit is, how to use it, and where knowledge should live
-- [AGENTS.md](./AGENTS.md): canonical cross-agent instruction file
-- [CLAUDE.md](./CLAUDE.md), [CODEX.md](./CODEX.md), and [GEMINI.md](./GEMINI.md): compatibility pointers back to `AGENTS.md`
-- [.github/copilot-instructions.md](./.github/copilot-instructions.md): GitHub Copilot compatibility pointer back to `AGENTS.md`
-- [CODING.md](./CODING.md): shared coding, security, verification, and AI-usage guardrails
-- [WORKFLOWS.md](./WORKFLOWS.md): proven generic workflows for safe AI-assisted changes
-- [PERSONAS.md](./PERSONAS.md): optional role-based prompting reference
-- [coding-standards](./coding-standards): optional language-specific checklists
-- [templates/vscode/tasks.json.example](./templates/vscode/tasks.json.example): starter VS Code tasks file for one-click project commands
-- [scripts/check](./scripts/check): lightweight toolkit sanity check
+## The adversarial review loop
 
-## Practical Rule
+`$pr-review-loop` replaces organization-specific AI review automation with a local, portable workflow:
 
-When new knowledge is learned:
+1. Discover the real diff boundary, base branch, repository rules, and available checks.
+2. Review the complete current change across behavior, security, data integrity, compatibility, operations, and tests.
+3. Return the three or four highest-value evidence-backed findings—never filler.
+4. Fix findings when changes are authorized and run proportionate verification.
+5. Recompute and review the complete diff, because fixes can expose or introduce new problems.
+6. Stop only when the change is ready, an explicit decision is needed, an accepted risk remains, or the bounded iteration limit is reached.
 
-- put reusable coding and safety rules in [CODING.md](./CODING.md)
-- put repeatable multi-step workflows in [WORKFLOWS.md](./WORKFLOWS.md)
-- put reusable role-based prompting guidance in [PERSONAS.md](./PERSONAS.md)
-- put project-specific rules in the project that owns them
-- update this README when setup or intended usage changes
+GitHub comments and thread resolution are optional delivery actions. The core review works locally and does not require a hosted AI-review bot.
+
+## How portability works
+
+```text
+                         Agent Operator
+                               │
+             ┌─────────────────┼─────────────────┐
+             │                 │                 │
+        Codex registry   Claude marketplace  Gemini extension
+             │                 │                 │
+             └─────────────────┼─────────────────┘
+                               │
+                    Self-contained plugins
+                               │
+              Builder Kit · Setup · Management
+```
+
+- `.agents/plugins/marketplace.json` is the Codex registry.
+- `.claude-plugin/marketplace.json` is the Claude Code registry.
+- `gemini-extension.json`, `commands/`, and `skills/` form the Gemini CLI extension.
+- `plugins/` contains the authoritative, reusable plugin implementations.
+- `AGENTS.md` is the canonical contributor instruction source; client-specific instruction files point back to it.
+
+The repository validator ensures the registries agree, plugin manifests stay synchronized, Gemini entrypoints map to authoritative skills, semantic versions are valid, and required setup guides exist.
+
+## Trust and safety
+
+Agent Operator skills are instructions executed by your coding agent with the permissions available in that environment. Read and trust a plugin before installing it.
+
+- No credentials or proprietary services are bundled.
+- User configuration is preserved unless a requested setup action requires changing it.
+- Destructive actions, publishing, remote comments, commits, and pushes are not implied by ordinary development work.
+- Repository-specific instructions and product requirements remain authoritative in the project that owns them.
+- Review findings distinguish evidence, inference, hypotheses, accepted risks, and decisions that require a person.
+
+## Build your own plugin
+
+1. Create a self-contained `plugins/<plugin-name>/` directory.
+2. Add matching Claude and Codex manifests.
+3. Register the plugin in both marketplace catalogs.
+4. Expose portable skills through the Gemini extension surface.
+5. Keep versions and shared metadata synchronized.
+6. Run the marketplace validator:
+
+   ```sh
+   ./scripts/check
+   ```
+
+Read [the contributor instructions](./AGENTS.md) and [marketplace workflows](./WORKFLOWS.md) before making changes. Plugin-specific engineering guidance belongs inside the plugin that owns it; Builder Kit keeps its standards and review lenses under [`plugins/builder-kit/references`](./plugins/builder-kit/references).
+
+## Repository layout
+
+```text
+agent-operator-toolkit/
+├── .agents/plugins/marketplace.json   # Codex marketplace
+├── .claude-plugin/marketplace.json    # Claude Code marketplace
+├── gemini-extension.json              # Gemini CLI extension
+├── commands/                          # Gemini CLI commands
+├── skills/                            # Gemini CLI skill entrypoints
+├── plugins/
+│   ├── agent-operator-setup/
+│   ├── builder-kit/
+│   └── marketplace-management/
+├── scripts/check                      # Cross-client validation
+├── AGENTS.md                          # Canonical contributor instructions
+├── README-CODEX.md
+├── README-CLAUDE.md
+└── README-GEMINI.md
+```
+
+## License
+
+[MIT](./LICENSE) — use it, adapt it, and build better agent workflows with it.
