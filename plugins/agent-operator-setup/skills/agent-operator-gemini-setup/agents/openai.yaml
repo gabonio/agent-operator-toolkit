@@ -1,0 +1,6 @@
+interface:
+  display_name: "Agent Operator Gemini Setup"
+  short_description: "Install or diagnose Agent Operator in Gemini CLI"
+  default_prompt: "Use $agent-operator-gemini-setup to set up or diagnose Agent Operator in Gemini CLI."
+policy:
+  allow_implicit_invocation: false

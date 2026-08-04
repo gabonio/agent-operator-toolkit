@@ -1,0 +1,6 @@
+description = "Install, update, or diagnose Agent Operator in Gemini CLI."
+prompt = """
+Use the agent-operator-gemini-setup skill to handle this Agent Operator setup request with Gemini CLI's native extension commands.
+
+Requested action: {{args}}
+"""

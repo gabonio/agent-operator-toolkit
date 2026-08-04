@@ -1,0 +1,6 @@
+interface:
+  display_name: "Start New App"
+  short_description: "Design and scaffold a sustainable new application"
+  default_prompt: "Use $start-new-app to design and scaffold this application safely."
+policy:
+  allow_implicit_invocation: false

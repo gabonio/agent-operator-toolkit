@@ -1,68 +1,70 @@
-# agent-operator-toolkit AGENTS
+# Agent Operator Marketplace AGENTS
 
 These instructions apply anywhere this toolkit is checked out.
 
-`AGENTS.md` is the canonical instruction source for this repo. If other agent-specific files such as `CLAUDE.md`, `CODEX.md`, `GEMINI.md`, or `.github/copilot-instructions.md` exist, they should point back here instead of containing divergent rules.
+`AGENTS.md` is the canonical instruction source for this repo. The `CLAUDE.md`, `CODEX.md`, and `GEMINI.md` compatibility files point back here instead of containing divergent rules.
 
 ## Purpose
 
-This repo stores reusable guardrails for AI-assisted coding. Keep it generic, portable, and safe for reuse across personal projects.
+This repo is a portable multi-agent marketplace for reusable AI-development plugins and skills. Keep distribution infrastructure generic, keep each plugin self-contained under `plugins/`, and use native Codex, Claude Code, and Gemini CLI surfaces.
 
-Project-specific requirements, architecture, credentials, and business rules belong in the project that owns them, not here.
+Project-specific requirements, credentials, proprietary systems, employer names, and business rules belong in the project or private plugin that owns them, not here.
 
 ## Read Order
 
 Before changing this repo:
 
 1. read [README.md](./README.md)
-2. read [CODING.md](./CODING.md)
-3. read [WORKFLOWS.md](./WORKFLOWS.md) if the task is procedural or multi-step
-4. read the relevant file in [coding-standards](./coding-standards) only if the task needs language-specific guidance
-5. read [PERSONAS.md](./PERSONAS.md) only if the user wants a role-specific perspective or deliverable
+2. read [WORKFLOWS.md](./WORKFLOWS.md) for plugin or release work
+3. read the target plugin's `SKILL.md` and directly referenced guidance
 
 ## Scope
 
 Track changes here only for:
 
-- reusable docs
-- general coding and safety guardrails
-- lightweight sanity-check script
+- reusable, organization-neutral plugins under `plugins/`
+- Codex and Claude Code marketplace registries
+- Gemini CLI extension metadata, commands, and skill entrypoints
+- marketplace contributor documentation
+- lightweight validation and release automation
 
 Do not track:
 
 - project-specific business logic
-- copied source from another repo
+- vendored application or business-logic source unrelated to a marketplace plugin
 - secrets or credentials
 - machine-specific operational notes
-- personal completion-reporting or team-notification workflows unless they are explicitly part of the parent project
+- employer-specific review bots, internal commands, or proprietary platform guidance
 - generated reports or scratch outputs
 
-## When Used As A Submodule
+## Plugin boundaries
 
-- the parent repo owns product requirements and project-specific instructions
-- this repo owns general AI coding guardrails only
-- if a rule only applies to one project, put it in that project instead of this toolkit
-- when a project has common developer commands, prefer adding `.vscode/tasks.json` so build, test, lint, and dev flows are available through clickable editor tasks instead of terminal-only instructions
+- the target project owns product requirements and project-specific instructions
+- each plugin owns only its reusable workflow and references
+- marketplace root files own discovery, validation, and publishing behavior
+- do not make one plugin depend on an organization-only bot, slash command, or service
 
 ## Documentation Governance
 
 Use the docs like this:
 
-- [README.md](./README.md): what this toolkit is and how it should be used
-- [CODING.md](./CODING.md): shared engineering, security, verification, and AI-usage rules
-- [WORKFLOWS.md](./WORKFLOWS.md): repeatable safe workflows
-- [coding-standards](./coding-standards): concise language-specific checklists
-- [PERSONAS.md](./PERSONAS.md): optional specialist-role reference for prompts and deliverables
-- [scripts/check](./scripts/check): lightweight toolkit sanity check
+- [README.md](./README.md): marketplace usage and structure
+- [WORKFLOWS.md](./WORKFLOWS.md): plugin addition and release workflows
+- `.claude-plugin/marketplace.json`: Claude Code marketplace registry
+- `.agents/plugins/marketplace.json`: Codex marketplace registry
+- `gemini-extension.json`, `commands/`, and `skills/`: Gemini CLI extension surface
+- `plugins/`: installable plugin roots
+- [scripts/check](./scripts/check): marketplace validation
 
 ## Documentation Maintenance Rules
 
 When new knowledge is learned well enough to keep:
 
-- add general coding or safety policy to [CODING.md](./CODING.md)
-- add repeated multi-step execution patterns to [WORKFLOWS.md](./WORKFLOWS.md)
+- add general marketplace policy to this file
+- add repeated marketplace maintenance patterns to [WORKFLOWS.md](./WORKFLOWS.md)
 - add setup or usage changes to [README.md](./README.md)
-- add reusable specialist-role prompts or response styles to [PERSONAS.md](./PERSONAS.md)
+- keep `README-CODEX.md`, `README-CLAUDE.md`, and `README-GEMINI.md` aligned with native client commands
+- keep plugin behavior in the owning plugin
 - keep project-specific rules in the project that owns them
 
 Do not duplicate the same guidance across many repos when it can live once here.

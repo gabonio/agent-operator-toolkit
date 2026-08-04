@@ -1,0 +1,6 @@
+interface:
+  display_name: "Builder Kit"
+  short_description: "Plan and deliver agent-built software safely"
+  default_prompt: "Use $builder-kit to guide this development task from discovery through verified delivery."
+policy:
+  allow_implicit_invocation: false

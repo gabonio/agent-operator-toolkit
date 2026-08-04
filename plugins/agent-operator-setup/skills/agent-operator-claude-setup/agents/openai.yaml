@@ -1,0 +1,6 @@
+interface:
+  display_name: "Agent Operator Claude Setup"
+  short_description: "Install or diagnose Agent Operator in Claude Code"
+  default_prompt: "Use $agent-operator-claude-setup to set up or diagnose Agent Operator in Claude Code."
+policy:
+  allow_implicit_invocation: false

@@ -1,77 +1,198 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
-import shutil
+import json
+import re
 import sys
+import tomllib
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parent.parent
-REQUIRED_ASSETS = [
-    ROOT / "README.md",
-    ROOT / "AGENTS.md",
-    ROOT / "CLAUDE.md",
-    ROOT / "CODEX.md",
-    ROOT / "GEMINI.md",
-    ROOT / "CODING.md",
-    ROOT / "WORKFLOWS.md",
-    ROOT / "PERSONAS.md",
-    ROOT / ".github" / "copilot-instructions.md",
-    ROOT / "coding-standards" / "README.md",
-    ROOT / "coding-standards" / "CPP.md",
-    ROOT / "coding-standards" / "FRONTEND.md",
-    ROOT / "coding-standards" / "JAVA.md",
-    ROOT / "coding-standards" / "PYTHON.md",
-    ROOT / "coding-standards" / "SHELL.md",
-    ROOT / "templates" / "vscode" / "tasks.json.example",
-    ROOT / "scripts" / "check",
-]
+CLAUDE_MARKETPLACE = ROOT / ".claude-plugin" / "marketplace.json"
+CODEX_MARKETPLACE = ROOT / ".agents" / "plugins" / "marketplace.json"
+GEMINI_MANIFEST = ROOT / "gemini-extension.json"
+GEMINI_COMMAND = ROOT / "commands" / "agent-operator" / "setup.toml"
+SHARED_MANIFEST_FIELDS = (
+    "name",
+    "version",
+    "description",
+    "author",
+    "repository",
+    "license",
+    "keywords",
+    "skills",
+)
+SEMVER = re.compile(r"^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-[0-9A-Za-z.-]+)?(?:\+[0-9A-Za-z.-]+)?$")
 
 
-def print_header(title: str) -> None:
-    print(f"\n== {title} ==")
+def fail(message: str, errors: list[str]) -> None:
+    errors.append(message)
+    print(f"ERROR: {message}")
 
 
-def check_required_assets() -> tuple[list[Path], list[Path]]:
-    present: list[Path] = []
-    missing: list[Path] = []
-    for asset in REQUIRED_ASSETS:
-        if asset.exists():
-            present.append(asset)
-        else:
-            missing.append(asset)
-    return present, missing
+def load_json(path: Path, errors: list[str]) -> dict:
+    try:
+        value = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        fail(f"cannot read valid JSON from {path.relative_to(ROOT)}: {exc}", errors)
+        return {}
+    if not isinstance(value, dict):
+        fail(f"{path.relative_to(ROOT)} must contain a JSON object", errors)
+        return {}
+    return value
+
+
+def load_toml(path: Path, errors: list[str]) -> dict:
+    try:
+        value = tomllib.loads(path.read_text(encoding="utf-8"))
+    except (OSError, tomllib.TOMLDecodeError) as exc:
+        fail(f"cannot read valid TOML from {path.relative_to(ROOT)}: {exc}", errors)
+        return {}
+    if not isinstance(value, dict):
+        fail(f"{path.relative_to(ROOT)} must contain a TOML table", errors)
+        return {}
+    return value
+
+
+def plugin_entries(data: dict, label: str, errors: list[str]) -> dict[str, dict]:
+    raw_entries = data.get("plugins")
+    if not isinstance(raw_entries, list):
+        fail(f"{label} marketplace plugins must be an array", errors)
+        return {}
+
+    entries: dict[str, dict] = {}
+    for index, entry in enumerate(raw_entries):
+        if not isinstance(entry, dict):
+            fail(f"{label} marketplace plugin at index {index} must be an object", errors)
+            continue
+        name = entry.get("name")
+        if not isinstance(name, str) or not name:
+            fail(f"{label} marketplace plugin at index {index} has no valid name", errors)
+            continue
+        if name in entries:
+            fail(f"{label} marketplace contains duplicate plugin {name}", errors)
+            continue
+        entries[name] = entry
+    return entries
+
+
+def check_plugin(plugin_root: Path, expected_version: str | None, errors: list[str]) -> None:
+    claude_path = plugin_root / ".claude-plugin" / "plugin.json"
+    codex_path = plugin_root / ".codex-plugin" / "plugin.json"
+    claude = load_json(claude_path, errors)
+    codex = load_json(codex_path, errors)
+    name = plugin_root.name
+
+    for label, manifest in (("Claude", claude), ("Codex", codex)):
+        if manifest.get("name") != name:
+            fail(f"{label} manifest name must match plugin directory {name}", errors)
+        if manifest.get("skills") != "./skills/":
+            fail(f"{label} manifest for {name} must declare ./skills/", errors)
+
+    for field in SHARED_MANIFEST_FIELDS:
+        if claude.get(field) != codex.get(field):
+            fail(f"Claude and Codex {field} fields differ for {name}", errors)
+    if not isinstance(claude.get("version"), str) or not SEMVER.fullmatch(claude["version"]):
+        fail(f"plugin version is not valid semantic versioning for {name}", errors)
+    if expected_version and claude.get("version") != expected_version:
+        fail(f"Claude marketplace version differs from plugin version for {name}", errors)
+
+    skills = sorted((plugin_root / "skills").glob("*/SKILL.md"))
+    if not skills:
+        fail(f"{name} contains no skills", errors)
+
+
+def check_gemini_extension(marketplace_name: object, errors: list[str]) -> None:
+    manifest = load_json(GEMINI_MANIFEST, errors)
+    if manifest.get("name") != marketplace_name:
+        fail("Gemini extension and marketplace names differ", errors)
+    version = manifest.get("version")
+    if not isinstance(version, str) or not SEMVER.fullmatch(version):
+        fail("Gemini extension version is not valid semantic versioning", errors)
+
+    context_name = manifest.get("contextFileName")
+    if not isinstance(context_name, str) or not (ROOT / context_name).is_file():
+        fail("Gemini extension contextFileName must reference an existing file", errors)
+
+    authoritative_skills: dict[str, Path] = {}
+    for skill_path in sorted((ROOT / "plugins").glob("*/skills/*/SKILL.md")):
+        name = skill_path.parent.name
+        if name in authoritative_skills:
+            fail(f"duplicate authoritative skill name: {name}", errors)
+            continue
+        authoritative_skills[name] = skill_path
+
+    gemini_skills = {
+        path.parent.name: path for path in sorted((ROOT / "skills").glob("*/SKILL.md"))
+    }
+    if set(gemini_skills) != set(authoritative_skills):
+        fail("Gemini skill entrypoints differ from authoritative plugin skills", errors)
+
+    for name, source_path in authoritative_skills.items():
+        wrapper_path = gemini_skills.get(name)
+        if wrapper_path is None:
+            continue
+        expected_reference = "../../" + source_path.relative_to(ROOT).as_posix()
+        if expected_reference not in wrapper_path.read_text(encoding="utf-8"):
+            fail(f"Gemini skill entrypoint does not reference its source: {name}", errors)
+
+    command = load_toml(GEMINI_COMMAND, errors)
+    if not isinstance(command.get("description"), str) or not isinstance(command.get("prompt"), str):
+        fail("Gemini setup command must contain string description and prompt fields", errors)
+    elif "{{args}}" not in command["prompt"]:
+        fail("Gemini setup command must forward user arguments", errors)
+
+    for guide in ("README-CODEX.md", "README-CLAUDE.md", "README-GEMINI.md", "LICENSE"):
+        if not (ROOT / guide).is_file():
+            fail(f"missing native client guide: {guide}", errors)
 
 
 def main() -> int:
-    exit_code = 0
+    errors: list[str] = []
+    claude = load_json(CLAUDE_MARKETPLACE, errors)
+    codex = load_json(CODEX_MARKETPLACE, errors)
 
-    print_header("Toolkit Check")
-    print(f"Toolkit root: {ROOT}")
+    if claude.get("name") != codex.get("name"):
+        fail("Claude and Codex marketplace names differ", errors)
 
-    print_header("Required Tools")
-    for tool in ("git", "python3"):
-        resolved = shutil.which(tool)
-        if resolved:
-            print(f"OK: {tool} -> {resolved}")
-        else:
-            print(f"ERROR: missing required tool `{tool}`")
-            exit_code = 1
+    claude_plugins = plugin_entries(claude, "Claude", errors)
+    codex_plugins = plugin_entries(codex, "Codex", errors)
+    if set(claude_plugins) != set(codex_plugins):
+        fail("Claude and Codex marketplace plugin sets differ", errors)
 
-    print_header("Tracked Assets")
-    present, missing = check_required_assets()
-    for asset in present:
-        print(f"OK: {asset.relative_to(ROOT)}")
-    for asset in missing:
-        print(f"ERROR: missing tracked asset {asset.relative_to(ROOT)}")
-        exit_code = 1
+    plugin_dirs = {path.name for path in (ROOT / "plugins").iterdir() if path.is_dir()}
+    if plugin_dirs != set(claude_plugins):
+        fail("registered plugins and plugin directories differ", errors)
 
-    print_header("Summary")
-    if exit_code == 0:
-        print("OK: toolkit docs and check script are present.")
-    else:
-        print("FAIL: one or more required toolkit files or tools are missing.")
-    return exit_code
+    for name, claude_entry in claude_plugins.items():
+        expected_path = f"./plugins/{name}"
+        if claude_entry.get("source") != expected_path:
+            fail(f"Claude source for {name} must be {expected_path}", errors)
+
+        codex_entry = codex_plugins.get(name, {})
+        source = codex_entry.get("source", {})
+        if source.get("source") != "local" or source.get("path") != expected_path:
+            fail(f"Codex source for {name} must be local at {expected_path}", errors)
+        policy = codex_entry.get("policy", {})
+        if policy.get("installation") not in {"AVAILABLE", "INSTALLED_BY_DEFAULT", "NOT_AVAILABLE"}:
+            fail(f"Codex installation policy is invalid for {name}", errors)
+        if policy.get("authentication") not in {"ON_INSTALL", "ON_USE"}:
+            fail(f"Codex authentication policy is invalid for {name}", errors)
+
+        plugin_root = ROOT / "plugins" / name
+        if not plugin_root.is_dir():
+            fail(f"plugin source does not exist: {plugin_root.relative_to(ROOT)}", errors)
+            continue
+        check_plugin(plugin_root, claude_entry.get("version"), errors)
+
+    check_gemini_extension(claude.get("name"), errors)
+
+    if errors:
+        print(f"\nFAIL: {len(errors)} marketplace validation error(s).")
+        return 1
+    print(f"OK: validated {len(claude_plugins)} portable plugin(s) for Codex and Claude Code plus Gemini CLI extension surfaces.")
+    return 0
 
 
 if __name__ == "__main__":

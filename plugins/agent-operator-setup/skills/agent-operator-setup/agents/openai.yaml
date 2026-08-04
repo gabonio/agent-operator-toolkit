@@ -1,0 +1,6 @@
+interface:
+  display_name: "Agent Operator Setup"
+  short_description: "Install, update, or diagnose Agent Operator"
+  default_prompt: "Use $agent-operator-setup to set up or diagnose the Agent Operator marketplace."
+policy:
+  allow_implicit_invocation: false

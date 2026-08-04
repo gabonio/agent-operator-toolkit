@@ -1,0 +1,19 @@
+{
+  "name": "agent-operator-setup",
+  "version": "0.3.0",
+  "description": "Install, update, and diagnose Agent Operator in Codex, Claude Code, or Gemini CLI without overwriting unrelated user configuration.",
+  "author": {
+    "name": "Gabriel Cruz"
+  },
+  "keywords": [
+    "claude-code",
+    "codex",
+    "gemini-cli",
+    "setup",
+    "marketplace",
+    "doctor",
+    "updates"
+  ],
+  "repository": "https://github.com/gabonio/agent-operator-toolkit",
+  "skills": "./skills/"
+}
