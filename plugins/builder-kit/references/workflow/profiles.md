@@ -6,11 +6,15 @@ Resolve two independent profiles.
 
 Values: `non-technical` or `technical`.
 
-- Read `Builder Kit communication profile: <value>` from the active tool's global instructions: `~/.codex/AGENTS.md` for Codex or `~/.claude/CLAUDE.md` for Claude Code; current prompt/project instructions may override it.
+- Read `Builder Kit communication profile: <value>` from the active tool's loaded global instructions (for example, `~/.codex/AGENTS.md` for Codex or `~/.claude/CLAUDE.md` for Claude Code); current prompt/project instructions may override it. Use loaded instructions for Copilot and Gemini too, without assuming another client's files apply.
 - If absent, default to `non-technical` and state that briefly.
 - Never edit global instructions without explicit permission.
 
 For `non-technical`, use ordinary language, explain necessary terms once, lead with impact and a recommendation, and avoid unexplained Git/architecture jargon. For `technical`, retain useful terminology, diagnostics, contracts, and tradeoffs. Both profiles preserve the same safety and approval boundaries.
+
+During discovery, ask one question at a time and skip known answers. Do not ask a non-developer to choose a language or framework without first explaining a recommendation in terms of their needs and constraints.
+
+The agent owns naming, organization, tests, and appropriate abstractions; do not turn engineering implementation details into a user questionnaire. Explain meaningful product, hosting, cost, security, and maintenance choices with a reasoned recommendation, and ask only for unknowns or decisions requiring the user's authority. Plain-language communication does not reduce engineering rigor or handoff quality.
 
 ## Delivery: project-specific
 

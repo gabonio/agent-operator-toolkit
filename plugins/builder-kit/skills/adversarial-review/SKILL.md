@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Adversarial Review
 
-Read [the adversarial lens](../../references/lenses/adversarial-review.md), [lens routing](../../references/lenses/lens-routing.md), and only the domain lenses relevant to the target.
+Read [the adversarial lens](../../references/lenses/adversarial-review.md), [lens routing](../../references/lenses/lens-routing.md), and only the domain lenses relevant to the target. For code, queries, or pipelines, use [standards routing](../../references/standards/routing.md) and load only matching guides.
 
 Establish the artifact, objective, constraints, evidence, and review boundary. State whether the pass is same-context, fresh-context, automated, or human; do not imply independence.
 

@@ -42,6 +42,8 @@ Delivery checkpoint:
 - [ ] Applicable type/lint/static checks.
 - [ ] Closest feasible local production-like build.
 - [ ] Cross-slice behavior and interactions verified.
+- [ ] Relevant capability ownership/dependencies and readable entrypoint-to-rule/test flow reviewed against the approved architecture.
+- [ ] Useful developer navigation, run/test path, and key decisions linked or updated in existing docs; handoff gaps recorded.
 - [ ] Relevant entry-path/rendered-state smoke test.
 - [ ] Final whole-PR review completed when authorized.
 - [ ] Diff/status confirms only intended work.

@@ -10,7 +10,7 @@
   "plugins": [
     {
       "name": "builder-kit",
-      "version": "0.2.2",
+      "version": "0.4.0",
       "description": "Plan, implement, verify, and adversarially review sustainable software changes.",
       "author": {
         "name": "Gabriel Cruz"

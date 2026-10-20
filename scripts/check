@@ -175,11 +175,23 @@ def check_copilot_builder_kit(errors: list[str]) -> None:
         if not path.is_file() or path.suffix not in {".md", ".tmpl"}:
             continue
         for link in re.findall(r"\]\(([^)\s]+)\)", path.read_text(encoding="utf-8")):
-            if not link.startswith(("./", "../")):
+            if link.startswith(("#", "//")) or re.match(r"^[A-Za-z][A-Za-z0-9+.-]*:", link):
                 continue
             target = (path.parent / link.split("#", 1)[0]).resolve()
             if not target.is_relative_to(plugin_root) or not target.is_file():
                 fail(f"missing or non-portable resource in {path.relative_to(ROOT)}: {link}", errors)
+
+
+def check_builder_kit_standards(errors: list[str]) -> None:
+    standards = ROOT / "plugins" / "builder-kit" / "references" / "standards"
+    routing = standards / "routing.md"
+    if not routing.is_file():
+        fail("missing Builder Kit standards routing table", errors)
+        return
+    text = routing.read_text(encoding="utf-8")
+    for path in sorted(standards.glob("*.md")):
+        if path != routing and f"]({path.name})" not in text:
+            fail(f"Builder Kit standard is not routed: {path.name}", errors)
 
 
 def main() -> int:
@@ -221,6 +233,7 @@ def main() -> int:
         check_plugin(plugin_root, claude_entry.get("version"), errors)
 
     check_copilot_builder_kit(errors)
+    check_builder_kit_standards(errors)
     check_gemini_extension(claude.get("name"), errors)
 
     if errors:
