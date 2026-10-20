@@ -33,7 +33,7 @@ For a tiny fix, make the smallest coherent change when implementation is request
 | New application                       | [start-new-app instructions](../start-new-app/SKILL.md)                                       |
 | Challenge assumptions or readiness    | [adversarial-review instructions](../adversarial-review/SKILL.md)                             |
 | Standard code/design review           | [standard review](../../references/lenses/standard-review.md)                                       |
-| Explicitly requested GitHub AI review | [PR review loop instructions](../pr-review-loop/SKILL.md)                                     |
+| Repeated review of current changes    | [PR review loop instructions](../pr-review-loop/SKILL.md)                                     |
 | Maintaining or releasing Builder Kit  | [release and update policy](../../references/workflow/release-and-updates.md)                       |
 
 Mandatory safety, security/privacy, accessibility, bounded-data, authorization, and trust-boundary guidance still applies when triggered. Never implement non-trivial work before approval, replace local conventions without cause, or disturb unrelated user work.

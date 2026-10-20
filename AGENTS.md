@@ -6,7 +6,7 @@ These instructions apply anywhere this toolkit is checked out.
 
 ## Purpose
 
-This repo is a portable multi-agent marketplace for reusable AI-development plugins and skills. Keep distribution infrastructure generic, keep each plugin self-contained under `plugins/`, and use native Codex, Claude Code, and Gemini CLI surfaces.
+This repo is a portable multi-agent marketplace for reusable AI-development plugins and skills. Keep distribution infrastructure generic, keep each plugin self-contained under `plugins/`, and use native Codex, Claude Code, GitHub Copilot, and Gemini CLI surfaces.
 
 Project-specific requirements, credentials, proprietary systems, employer names, and business rules belong in the project or private plugin that owns them, not here.
 
@@ -23,7 +23,7 @@ Before changing this repo:
 Track changes here only for:
 
 - reusable, organization-neutral plugins under `plugins/`
-- Codex and Claude Code marketplace registries
+- Codex and shared Claude Code/GitHub Copilot marketplace registries
 - Gemini CLI extension metadata, commands, and skill entrypoints
 - marketplace contributor documentation
 - lightweight validation and release automation
@@ -34,7 +34,7 @@ Do not track:
 - vendored application or business-logic source unrelated to a marketplace plugin
 - secrets or credentials
 - machine-specific operational notes
-- employer-specific review bots, internal commands, or proprietary platform guidance
+- internal commands, private workflows, or proprietary platform guidance
 - generated reports or scratch outputs
 
 ## Plugin boundaries
@@ -50,7 +50,7 @@ Use the docs like this:
 
 - [README.md](./README.md): marketplace usage and structure
 - [WORKFLOWS.md](./WORKFLOWS.md): plugin addition and release workflows
-- `.claude-plugin/marketplace.json`: Claude Code marketplace registry
+- `.claude-plugin/marketplace.json`: shared Claude Code and GitHub Copilot marketplace registry
 - `.agents/plugins/marketplace.json`: Codex marketplace registry
 - `gemini-extension.json`, `commands/`, and `skills/`: Gemini CLI extension surface
 - `plugins/`: installable plugin roots
@@ -63,7 +63,7 @@ When new knowledge is learned well enough to keep:
 - add general marketplace policy to this file
 - add repeated marketplace maintenance patterns to [WORKFLOWS.md](./WORKFLOWS.md)
 - add setup or usage changes to [README.md](./README.md)
-- keep `README-CODEX.md`, `README-CLAUDE.md`, and `README-GEMINI.md` aligned with native client commands
+- keep `README-CODEX.md`, `README-CLAUDE.md`, `README-COPILOT.md`, and `README-GEMINI.md` aligned with native client commands
 - keep plugin behavior in the owning plugin
 - keep project-specific rules in the project that owns them
 

@@ -13,4 +13,5 @@ Use this only when maintaining or publishing Builder Kit itself.
 - Claude: workspace settings control marketplace auto-update; refresh occurs at startup when enabled.
 - Codex native marketplace: run `codex plugin marketplace upgrade agent-operator-toolkit`, then start a new task if needed.
 - Codex manual checkout: pull the latest checkout and restart the session.
+- Copilot: refresh the catalog with `copilot plugin marketplace update agent-operator-toolkit`, update with `copilot plugin update builder-kit@agent-operator-toolkit`, then start a new session. Local-path installs must be reinstalled to refresh their cached content.
 - Do not add self-modifying startup hooks; installed instructions are versioned artifacts.

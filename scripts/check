@@ -143,9 +143,43 @@ def check_gemini_extension(marketplace_name: object, errors: list[str]) -> None:
     elif "{{args}}" not in command["prompt"]:
         fail("Gemini setup command must forward user arguments", errors)
 
-    for guide in ("README-CODEX.md", "README-CLAUDE.md", "README-GEMINI.md", "LICENSE"):
+    for guide in ("README-CODEX.md", "README-CLAUDE.md", "README-COPILOT.md", "README-GEMINI.md", "LICENSE"):
         if not (ROOT / guide).is_file():
             fail(f"missing native client guide: {guide}", errors)
+
+
+def check_copilot_builder_kit(errors: list[str]) -> None:
+    # Copilot discovers the Claude-format catalog and manifest checked above.
+    plugin_root = (ROOT / "plugins" / "builder-kit").resolve()
+    skill_names = {"builder-kit", "start-new-app", "develop-from-spec", "adversarial-review", "pr-review-loop"}
+    skills = sorted((plugin_root / "skills").glob("*/SKILL.md"))
+    if {path.parent.name for path in skills} != skill_names:
+        fail("Copilot Builder Kit skill set differs from the five supported workflows", errors)
+
+    for path in skills:
+        text = path.read_text(encoding="utf-8")
+        frontmatter = re.match(r"\A---\n(.*?)\n---\n", text, re.DOTALL)
+        if frontmatter is None:
+            fail(f"missing skill frontmatter: {path.relative_to(ROOT)}", errors)
+            continue
+        header = frontmatter.group(1)
+        name = re.search(r"^name: ([a-z0-9]+(?:-[a-z0-9]+)*)$", header, re.MULTILINE)
+        if name is None or name.group(1) != path.parent.name:
+            fail(f"Copilot skill name must match its directory: {path.relative_to(ROOT)}", errors)
+        if not re.search(r"^description: \S[^\n]*$", header, re.MULTILINE):
+            fail(f"missing single-line skill description: {path.relative_to(ROOT)}", errors)
+        if not re.search(r"^disable-model-invocation: true$", header, re.MULTILINE):
+            fail(f"Builder Kit skills must remain explicitly invoked: {path.relative_to(ROOT)}", errors)
+
+    for path in sorted(plugin_root.rglob("*")):
+        if not path.is_file() or path.suffix not in {".md", ".tmpl"}:
+            continue
+        for link in re.findall(r"\]\(([^)\s]+)\)", path.read_text(encoding="utf-8")):
+            if not link.startswith(("./", "../")):
+                continue
+            target = (path.parent / link.split("#", 1)[0]).resolve()
+            if not target.is_relative_to(plugin_root) or not target.is_file():
+                fail(f"missing or non-portable resource in {path.relative_to(ROOT)}: {link}", errors)
 
 
 def main() -> int:
@@ -186,12 +220,13 @@ def main() -> int:
             continue
         check_plugin(plugin_root, claude_entry.get("version"), errors)
 
+    check_copilot_builder_kit(errors)
     check_gemini_extension(claude.get("name"), errors)
 
     if errors:
         print(f"\nFAIL: {len(errors)} marketplace validation error(s).")
         return 1
-    print(f"OK: validated {len(claude_plugins)} portable plugin(s) for Codex and Claude Code plus Gemini CLI extension surfaces.")
+    print(f"OK: validated {len(claude_plugins)} portable plugin(s) for Codex and Claude Code, Copilot Builder Kit skills, and Gemini CLI extension surfaces.")
     return 0
 
 
