@@ -1,12 +1,9 @@
 # Integration and Trust Boundaries
 
-- Name the authoritative owner of every external datum and mutation.
-- Separate cached/read models from write authorities and planning state from execution state.
-- Treat browsers and caller-controlled input as untrusted.
-- Centralize external access behind typed clients, adapters, or facades.
-- Keep secrets, upstream internals/error bodies, environment routing, and authorization enforcement behind trusted boundaries.
-- Use the caller's delegated authorization when actions must be attributable to that caller.
-- Validate inputs and object-level access on the backend; never rely on hidden UI controls.
-- Make local bypasses explicit and visibly different from deployed behavior.
-- Route related reads consistently so environments/sources cannot be mixed accidentally.
-- For cross-repository contracts, deploy the provider before its consumers and preserve compatibility until migration completes.
+- Name the authority for each external read/write; separate cached/planned state from write/execution authority.
+- Centralize external access behind typed clients/adapters and route related reads consistently.
+- Treat caller input as untrusted; enforce validation and object/action authorization on trusted backends.
+- Keep secrets, upstream internals, error bodies, and environment routing behind trusted boundaries.
+- Use delegated caller authorization when actions must be attributable to that caller.
+- Make local bypasses explicit and visibly non-production.
+- For cross-repository contracts, deploy providers first and preserve compatibility through migration.

@@ -1,19 +1,20 @@
 # Agent Operator
 
-**A portable marketplace of professional software-development skills for Codex, Claude Code, and Gemini CLI.**
+**A portable marketplace of professional software-development skills for Codex, Claude Code, GitHub Copilot, and Gemini CLI.**
 
 [![Codex](https://img.shields.io/badge/Codex-native-111827)](./README-CODEX.md)
 [![Claude Code](https://img.shields.io/badge/Claude_Code-native-D97757)](./README-CLAUDE.md)
+[![GitHub Copilot](https://img.shields.io/badge/GitHub_Copilot-native-111827)](./README-COPILOT.md)
 [![Gemini CLI](https://img.shields.io/badge/Gemini_CLI-native-4285F4)](./README-GEMINI.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](./LICENSE)
 
-Agent Operator gives coding agents a reusable operating system for planning, implementation, verification, and review. Install the same workflows through each agent's native extension model—without depending on an employer-specific service, proprietary review bot, or private convention.
+Agent Operator gives coding agents a reusable operating system for planning, implementation, verification, and review. Install the same workflows through each agent's native extension model, with portable guidance and no private infrastructure dependencies.
 
 The flagship **Builder Kit** plugin combines specification-driven development, repository-aware engineering rules, specialist review lenses, safe Git workflows, and a bounded adversarial review loop that keeps working until a change is genuinely merge-ready.
 
 ## Why Agent Operator?
 
-- **One workflow, three agents.** Codex, Claude Code, and Gemini CLI receive equivalent skills through their native distribution formats.
+- **One workflow, four agents.** Codex, Claude Code, GitHub Copilot, and Gemini CLI receive the same authoritative Builder Kit skills through their native distribution formats.
 - **Built for real repositories.** Skills discover local instructions, architecture, checks, and constraints before proposing changes.
 - **Review that pushes back.** The adversarial loop surfaces three or four material findings per pass, verifies them, fixes authorized issues, and reviews the complete diff again.
 - **Safe by default.** Installation, Git, GitHub, credentials, and destructive actions retain explicit authority boundaries.
@@ -59,6 +60,19 @@ Restart Gemini CLI, then run `/agent-operator:setup install` or inspect the inst
 
 [Complete Gemini CLI setup, updates, and troubleshooting →](./README-GEMINI.md)
 
+### GitHub Copilot
+
+Copilot CLI reads the existing Claude-format marketplace and plugin manifests:
+
+```sh
+copilot plugin marketplace add gabonio/agent-operator-toolkit
+copilot plugin install builder-kit@agent-operator-toolkit
+```
+
+Start a new session and ask to use the `builder-kit` skill. In the Copilot app, install Builder Kit through **Customize > Plugins**.
+
+[Complete Copilot setup, updates, and troubleshooting →](./README-COPILOT.md)
+
 ## Marketplace
 
 | Plugin | What it gives your agent | Best for |
@@ -77,11 +91,11 @@ Restart Gemini CLI, then run `/agent-operator:setup install` or inspect the inst
 | `$adversarial-review` | Pressure-test a plan, architecture, diff, or readiness claim without changing it |
 | `$pr-review-loop` | Review, fix, verify, and repeat until the current change is merge-ready or reaches a clear stop condition |
 
-Client interfaces may display skill names differently, but the underlying workflow and safety rules remain aligned.
+The `$skill-name` examples use Codex notation. In Copilot, explicitly ask to use the named skill; client interfaces may display names differently, but the underlying workflow and safety rules remain aligned.
 
 ## The adversarial review loop
 
-`$pr-review-loop` replaces organization-specific AI review automation with a local, portable workflow:
+`$pr-review-loop` is a local, portable workflow:
 
 1. Discover the real diff boundary, base branch, repository rules, and available checks.
 2. Review the complete current change across behavior, security, data integrity, compatibility, operations, and tests.
@@ -90,7 +104,7 @@ Client interfaces may display skill names differently, but the underlying workfl
 5. Recompute and review the complete diff, because fixes can expose or introduce new problems.
 6. Stop only when the change is ready, an explicit decision is needed, an accepted risk remains, or the bounded iteration limit is reached.
 
-GitHub comments and thread resolution are optional delivery actions. The core review works locally and does not require a hosted AI-review bot.
+GitHub comments and thread resolution are optional delivery actions. The core review works locally with the agent's available tools.
 
 ## How portability works
 
@@ -99,7 +113,7 @@ GitHub comments and thread resolution are optional delivery actions. The core re
                                │
              ┌─────────────────┼─────────────────┐
              │                 │                 │
-        Codex registry   Claude marketplace  Gemini extension
+        Codex registry   Claude / Copilot    Gemini extension
              │                 │                 │
              └─────────────────┼─────────────────┘
                                │
@@ -110,11 +124,12 @@ GitHub comments and thread resolution are optional delivery actions. The core re
 
 - `.agents/plugins/marketplace.json` is the Codex registry.
 - `.claude-plugin/marketplace.json` is the Claude Code registry.
+- GitHub Copilot reuses that registry and each plugin's `.claude-plugin/plugin.json`; its supported legacy format requires no duplicate manifests.
 - `gemini-extension.json`, `commands/`, and `skills/` form the Gemini CLI extension.
 - `plugins/` contains the authoritative, reusable plugin implementations.
 - `AGENTS.md` is the canonical contributor instruction source; client-specific instruction files point back to it.
 
-The repository validator ensures the registries agree, plugin manifests stay synchronized, Gemini entrypoints map to authoritative skills, semantic versions are valid, and required setup guides exist.
+The repository validator ensures the registries agree, plugin manifests stay synchronized, Builder Kit's Copilot skills and resource links are valid, Gemini entrypoints map to authoritative skills, semantic versions are valid, and required setup guides exist.
 
 ## Trust and safety
 
@@ -146,7 +161,7 @@ Read [the contributor instructions](./AGENTS.md) and [marketplace workflows](./W
 ```text
 agent-operator-toolkit/
 ├── .agents/plugins/marketplace.json   # Codex marketplace
-├── .claude-plugin/marketplace.json    # Claude Code marketplace
+├── .claude-plugin/marketplace.json    # Claude Code and Copilot marketplace
 ├── gemini-extension.json              # Gemini CLI extension
 ├── commands/                          # Gemini CLI commands
 ├── skills/                            # Gemini CLI skill entrypoints
@@ -158,6 +173,7 @@ agent-operator-toolkit/
 ├── AGENTS.md                          # Canonical contributor instructions
 ├── README-CODEX.md
 ├── README-CLAUDE.md
+├── README-COPILOT.md
 └── README-GEMINI.md
 ```
 

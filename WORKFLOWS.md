@@ -1,6 +1,6 @@
 # Marketplace workflows
 
-These workflows keep Agent Operator portable, reviewable, and consistent across Codex, Claude Code, and Gemini CLI.
+These workflows keep Agent Operator portable, reviewable, and consistent across Codex, Claude Code, GitHub Copilot, and Gemini CLI.
 
 ## Add a plugin
 
@@ -10,6 +10,8 @@ These workflows keep Agent Operator portable, reviewable, and consistent across 
 4. Default Codex plugins to `AVAILABLE` and `ON_INSTALL` unless a different policy is explicitly required.
 5. Add or update Gemini root skill entrypoints for portable skills.
 6. Run `./scripts/check`.
+
+Copilot consumes the shared `.claude-plugin/marketplace.json` and `.claude-plugin/plugin.json` manifests using its supported legacy format. Keep skills under `skills/<name>/SKILL.md` and relative resources inside the plugin; do not add duplicate Copilot manifests or workflow copies.
 
 ## Update a plugin
 
@@ -22,7 +24,7 @@ These workflows keep Agent Operator portable, reviewable, and consistent across 
 
 ## Keep plugins generic
 
-1. Search the complete plugin for employer names, internal hosts, private commands, proprietary platform types, and organization-only review automation.
+1. Search the complete plugin for employer names, internal hosts, private commands, proprietary platform types, and private workflow dependencies.
 2. Replace organizational policy with repository discovery and evidence-backed local rules.
 3. Route specialized work to an available owning skill without assuming that skill is installed.
 4. Ensure the plugin has a safe fallback or a clear stop condition when optional integrations are unavailable.
@@ -38,10 +40,10 @@ These workflows keep Agent Operator portable, reviewable, and consistent across 
 
 ## Setup documentation
 
-1. Keep [README-CODEX.md](./README-CODEX.md), [README-CLAUDE.md](./README-CLAUDE.md), and [README-GEMINI.md](./README-GEMINI.md) aligned with their native commands and setup skills.
-2. Treat Codex and Claude Code as marketplace clients and Gemini CLI as an extension client; do not invent a shared command syntax.
+1. Keep [README-CODEX.md](./README-CODEX.md), [README-CLAUDE.md](./README-CLAUDE.md), [README-COPILOT.md](./README-COPILOT.md), and [README-GEMINI.md](./README-GEMINI.md) aligned with their native commands and available setup skills.
+2. Treat Codex, Claude Code, and Copilot as marketplace clients and Gemini CLI as an extension client; do not invent a shared command syntax. Copilot currently uses the documented native install path, not the three-client setup router/doctor.
 3. Prefer native install, update, reload/restart, and doctor flows over direct edits to user configuration.
-4. When setup behavior changes, bump the setup plugin version and verify all three client surfaces.
+4. When setup plugin behavior changes, bump its version and verify its three client surfaces. Validate Copilot's shared manifests, Builder Kit skill metadata, and resource links with `./scripts/check`; smoke-test installation and `/skills list` with Copilot CLI when available.
 
 ## Adversarial review changes
 
