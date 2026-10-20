@@ -13,3 +13,5 @@ Sources, curated through 2026-08-04:
 - repository-local instructions and code as the highest practical source for each task.
 
 Refresh standards after material platform/team changes, updating this record with the owning pack. Do not mine PR history on every invocation.
+
+Language expansion (2026-10-20): TypeScript/JavaScript, Go, C#/.NET, SQL, Rust, Kotlin, Swift, PHP, and Ruby references are curated general language/runtime correctness guidance, not additional team conventions or verified hosting compatibility claims. Check version-sensitive behavior against the target toolchain and official documentation; the stack-selection interview requires current hosting evidence or an explicit unverified assumption.

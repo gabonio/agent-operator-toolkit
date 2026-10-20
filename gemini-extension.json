@@ -1,6 +1,6 @@
 {
   "name": "agent-operator-toolkit",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Portable setup, development, review, and marketplace-management skills for Gemini CLI.",
   "contextFileName": "GEMINI-EXTENSION.md"
 }

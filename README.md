@@ -93,6 +93,10 @@ Start a new session and ask to use the `builder-kit` skill. In the Copilot app, 
 
 The `$skill-name` examples use Codex notation. In Copilot, explicitly ask to use the named skill; client interfaces may display names differently, but the underlying workflow and safety rules remain aligned.
 
+If you do not know which language to use, `$start-new-app` asks one plain-language question at a time about your product, hosting, constraints, and who will maintain it. It recommends a justified language/runtime/framework/deployment combination, flags unverified hosting assumptions, and waits for your approval before selecting the stack or scaffolding. It does not deploy anything or silently replace an existing stack.
+
+Builder Kit loads [language and platform standards](./plugins/builder-kit/references/standards/routing.md) only when relevant: TypeScript/JavaScript, Go, C#/.NET, SQL, Rust, Kotlin, Swift, PHP, and Ruby, alongside existing Python, Java, C++, frontend, and Jenkins guidance.
+
 ## The adversarial review loop
 
 `$pr-review-loop` is a local, portable workflow:

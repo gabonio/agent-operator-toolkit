@@ -1,6 +1,6 @@
 {
   "name": "builder-kit",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "description": "An explicitly invoked, token-efficient harness for planning, implementing, and reviewing agent-driven software. It helps technical and non-technical users produce sustainable code through approval-gated specifications, pragmatic repository-aware standards, conditional expert lenses, safe Git workflows, and evidence-backed verification.",
   "author": {
     "name": "Gabriel Cruz"

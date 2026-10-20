@@ -27,7 +27,7 @@ For a tiny fix, make the smallest coherent change when implementation is request
 | Secrets, permissions, sensitive data  | [security and privacy](../../references/architecture/security-and-privacy.md)                       |
 | Frontend styling or components        | [frontend composition](../../references/architecture/frontend-composition.md)                       |
 | Mutations, concurrency, migrations    | [reliability and evolution](../../references/architecture/reliability-and-evolution.md)             |
-| Java, frontend, Python, C++, Jenkins  | Only the matching file under `../../references/standards/`                                          |
+| Language, frontend, SQL, or CI work   | [standards routing](../../references/standards/routing.md), then only matching files                 |
 | Specialized platform or service work  | [external capability routing](../../references/workflow/external-capabilities.md), then invoke an available owning skill |
 | Prototype project                     | [prototype delivery](../../references/workflow/prototype-delivery.md)                               |
 | New application                       | [start-new-app instructions](../start-new-app/SKILL.md)                                       |

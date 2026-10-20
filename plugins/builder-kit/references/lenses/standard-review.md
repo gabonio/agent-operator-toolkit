@@ -3,6 +3,7 @@
 Review read-only unless changes are separately authorized.
 
 - Establish the approved specification/intent, repository rules, and exact diff/artifact boundary.
+- For code, queries, or pipelines, use [standards routing](../standards/routing.md); load only guides matching the changed boundary.
 - Check correctness, regressions, contracts/states, triggered security/privacy concerns, maintainability, and evidence.
 - Verify findings against code or authoritative documentation; distinguish defects from questions.
 - Rank actionable findings by severity and location. Avoid unrelated refactors, speculative preferences, and local-style bikeshedding.
