@@ -4,23 +4,17 @@
 **Specification:** {{SPEC_PATH}}
 **Communication profile:** {{COMMUNICATION_PROFILE}}
 **Delivery profile:** {{DELIVERY_PROFILE}}
-**Applied lenses:** {{APPLIED_LENSES}}
+**Delivery strategy:** {{LOCAL_ONLY_OR_INCREMENTAL_DRAFT_PR}}
+**Approved GitHub writes:** {{NONE_OR_BOUNDED_DRAFT_PR_PUSH_AND_REVIEW_SCOPE}}
 
-## Executor instructions
-
-- Implement only after explicit approval.
-- Treat the specification as the behavioral/architectural source and this plan as the ordered handoff.
-- Follow repository instructions and preserve unrelated work.
-- Do not substitute persona prompts for the concrete decisions below.
-- Stop for renewed approval on material scope, behavior, contract, dependency, security, migration, or deployment drift.
-- Check off tasks and record concise evidence.
+Implement only after approval. The specification owns behavior; this plan owns order. Follow repository rules, preserve unrelated work, and stop on material drift.
 
 ## Invariants and non-goals
 
 - {{INVARIANT}}
 - Non-goal: {{NON_GOAL}}
 
-## Dependencies and delivery order
+## Delivery order
 
 1. {{DEPENDENCY_OR_PROVIDER_FIRST_STEP}}
 
@@ -28,26 +22,30 @@
 
 ### Task 1: {{TASK_NAME}}
 
-Target files/areas:
-
-- {{TARGET}}
+Target: {{TARGET}}
 
 - [ ] {{LITERAL_IMPLEMENTATION_STEP}}
 - [ ] {{CONTRACT_OR_STATE_REQUIREMENT}}
 - [ ] {{FOCUSED_TEST}}
 
-Evidence:
+Evidence/checkpoint: {{COMMAND_RESULT_AND_REVIEWED_HEAD_IF_APPLICABLE}}
 
-- {{COMMAND_AND_RESULT}}
+Delivery checkpoint:
+
+- [ ] Slice verification passes.
+- [ ] Authorized commit and push to the draft PR are complete when applicable.
+- [ ] Incremental review is clean at {{REVIEWED_HEAD}} before the next slice begins.
 
 ## Verification and completion
 
 - [ ] Focused tests for changed behavior.
 - [ ] Applicable type/lint/static checks.
 - [ ] Closest feasible local production-like build.
-- [ ] Real entry-path or rendered-state smoke test when relevant.
+- [ ] Cross-slice behavior and interactions verified.
+- [ ] Relevant entry-path/rendered-state smoke test.
+- [ ] Final whole-PR review completed when authorized.
 - [ ] Diff/status confirms only intended work.
-- [ ] Exact evidence and residual risks reported.
+- [ ] Evidence and residual risks reported.
 
 ## Stop conditions
 

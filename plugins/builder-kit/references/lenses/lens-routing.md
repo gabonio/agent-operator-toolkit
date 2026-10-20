@@ -1,6 +1,6 @@
 # Expert Lens Routing
 
-Lenses expose questions; they are not personas or independent evidence. Propose at most two primary lenses plus the adversarial review lens unless the work is genuinely cross-cutting. The user may add/remove optional lenses.
+Lenses expose questions, not personas or independent evidence. Load at most two primary lenses unless the work is genuinely cross-cutting; the user may override them.
 
 | Trigger                                          | Read                                                        |
 | ------------------------------------------------ | ----------------------------------------------------------- |
@@ -15,6 +15,4 @@ Lenses expose questions; they are not personas or independent evidence. Propose 
 | compliance with approved design and local rules  | [standard review](standard-review.md)                       |
 | pressure-test assumptions/readiness              | [adversarial review](adversarial-review.md)                 |
 
-Security/privacy, accessibility, data sustainability, destructive safety, authorization, and trust boundaries are mandatory guardrails when triggered, not optional lenses.
-
-Convert useful findings into explicit objectives, context, constraints, success criteria, evidence, non-goals/permissions, verification, and stop conditions. Record applied lenses for traceability, but give the executor the decisions—not “act as…” instructions.
+Security/privacy, accessibility, bounded data, destructive safety, authorization, and trust boundaries remain mandatory when triggered. Give the executor resulting decisions, not lens or persona prompts.

@@ -4,9 +4,8 @@
 **Date:** {{DATE}}
 **Communication profile:** {{COMMUNICATION_PROFILE}}
 **Delivery profile:** {{DELIVERY_PROFILE}}
-**Applied lenses:** {{APPLIED_LENSES}}
 
-## Objective and users
+## Objective
 
 {{USER_VISIBLE_OUTCOME_AND_CONTEXT}}
 
@@ -24,50 +23,27 @@
 
 - {{NON_GOAL}}
 
-## Current system and source of truth
+## Current system
 
 {{CURRENT_BEHAVIOR_OWNERSHIP_AND_EVIDENCE}}
 
-## Proposed design
+## Decisions and contracts
 
 {{COMPONENTS_DATA_FLOW_CONTRACTS_AND_DECISIONS}}
 
-## States and failure behavior
+## States and failures
 
 {{RELEVANT_LOADING_EMPTY_PARTIAL_STALE_ERROR_PERMISSION_OR_RETRY_STATES}}
 
-## Sustainability and performance
+## Triggered concerns
 
-<!-- Include for data-bearing or growth-sensitive work. -->
+Include only relevant data/performance, security/privacy, compatibility/migration, rollout/rollback, or prototype decisions.
 
-- Current volume and growth assumption: {{VOLUME}}
-- Query/request scope and bound: {{SCOPE_AND_BOUND}}
-- Fields and DTO/API contract: {{FIELDS_AND_CONTRACT}}
-- Processing location and indexes/query considerations: {{PROCESSING_AND_QUERY}}
-- Cache, invalidation, stale, and partial behavior: {{CACHE_AND_FAILURE}}
-- Request-scope verification: {{SCOPE_TEST}}
-
-## Security, privacy, and trust boundaries
-
-{{AUTHORIZATION_DATA_AND_BOUNDARY_DECISIONS}}
-
-## Compatibility, migration, and delivery
-
-{{COMPATIBILITY_ROLLOUT_ROLLBACK_OR_NOT_APPLICABLE}}
-
-## Prototype limits and promotion
-
-<!-- Include only for an explicitly confirmed prototype. -->
-
-- Learning goal and lifetime: {{PROTOTYPE_GOAL}}
-- User/data/environment bounds: {{PROTOTYPE_BOUNDS}}
-- Approved shortcuts: {{SHORTCUTS}}
-- Replacement triggers: {{TRIGGERS}}
-- Production-promotion work: {{HARDENING}}
+- {{TRIGGERED_DECISION_OR_NOT_APPLICABLE}}
 
 ## Verification strategy
 
-{{TESTS_BUILDS_RENDERING_AND_RUNTIME_EVIDENCE}}
+{{TESTS_BUILDS_ENTRY_PATH_AND_RUNTIME_EVIDENCE}}
 
 ## Open decisions and risks
 
@@ -75,4 +51,4 @@
 
 ## Approval
 
-Approval authorizes the companion implementation plan, not material design drift or external publication/deployment unless separately stated.
+Approval does not authorize material drift, publication, or deployment unless separately stated.

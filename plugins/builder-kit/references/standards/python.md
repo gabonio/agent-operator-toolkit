@@ -2,13 +2,10 @@
 
 Apply repository tooling first.
 
-- Follow PEP 8/20 and the existing formatter/linter/type-checker.
-- Separate interface/driver concerns from importable core logic.
-- Keep core use-case logic stateless where practical; pass configuration as structured inputs rather than reading hidden files/environment inside domain logic.
-- Keep UI/CLI state, persistence orchestration, logging, and progress reporting at boundaries.
-- Use clear type annotations at public boundaries and structured result/error shapes.
-- Avoid broad exception catches; preserve causes and present safe errors at the owning boundary.
-- Keep network/filesystem/time dependencies injectable or isolated for testing.
-- Unit-test core logic without live services; test adapters at their boundaries using fixtures/fakes.
-- Prefer `python -m <module>` or the repository's established entry point for locally repeatable execution.
+- Use existing format/lint/type tools; for a new project without them, prefer Ruff unless platform standards say otherwise.
+- Separate interfaces/drivers from importable core logic and keep configuration/dependencies explicit.
+- Keep UI/CLI state, persistence, logging, and progress at boundaries.
+- Type public boundaries, preserve exception causes, and present safe errors at the owner.
+- Test core logic without live services and adapters with fixtures/fakes.
+- Use the repository entry point or `python -m <module>` for repeatable execution.
 - Do not introduce a second formatter, package manager, CLI framework, or project layout without an approved need.

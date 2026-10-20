@@ -1,30 +1,20 @@
 # Java Standards
 
-Apply repository instructions first and delegate platform-specific behavior to an available owning skill.
+Apply repository instructions first and delegate platform-specific behavior to the owning skills.
 
-## General standards
+## Shared standards
 
-- Prefer constructor injection and immutable dependency fields.
-- Avoid wildcard imports except where the repository explicitly permits static test imports.
-- Capitalize abbreviations as words in camel/Pascal case, such as `HttpJsonRpcModule`, not `HTTPJSONRPCModule`.
-- Use descriptive domain names and stable DTO/contracts instead of exposing persistence entities.
-- Keep validation and business rules in their owning boundary; avoid mapper business logic and duplicate guards.
-- Express nullability and absence with the repository's established type-system mechanism; do not mix competing annotation/Optional conventions inside one codebase.
-- Use typed domain/business errors, preserve causes, and translate technical failures at the owning boundary without leaking internals to clients.
-- Remove backend features only after dependent clients have migrated or been removed.
-- Inject time and other environmental dependencies for deterministic tests.
-- Guard read-then-write races and use transactions/optimistic concurrency where required.
-- Test changed behavior at the lowest useful level and at real integration boundaries.
-- Use the repository's established telemetry stack for meaningful counters, timings, and traces; do not introduce a competing observability framework casually.
-- Match local formatting/import/test naming; do not modernize legacy style incidentally.
+- Prefer constructor injection, immutable dependencies, stable DTO/contracts, and domain names over exposed persistence entities.
+- Keep validation/business rules in their owning boundary; preserve causes and translate errors there without leaking internals.
+- Follow the repository's nullability/absence mechanism; do not introduce a competing convention.
+- Preserve clients before removing backend behavior; guard races and transactional writes where needed.
+- Inject time/environment dependencies for deterministic tests and verify real integration boundaries.
+- Use existing telemetry, formatting, and static-analysis tools. Ask the backend maintainers before introducing a missing formatter/linter.
 
-## Optional repository conventions
+## Observed practices and conventions
 
-- API → Manager → Service → Repository layering.
-- `final var` for non-reassigned locals; no `final` method parameters.
-- Test names `methodName_whenCondition_thenExpectedResult` plus user-focused `@DisplayName`.
-- Unit tests in the feature module and IoC-backed integration tests in the testing module.
-- Injected `Clock` implementations for deterministic time behavior.
-- Idempotent persistence callbacks capture only values safe for the storage boundary.
+- Common patterns: layered API → Service → Repository, feature modules, records for DTO/config, `final var` locals, and no `final` parameters.
+- Tests commonly use `methodName_whenCondition_thenExpectedResult`, user-focused `@DisplayName`, and unit tests per feature module plus integration tests against real boundaries.
+- Inject `InstantSource`/`Clock` for time; keep atomic-update callbacks serializable and idempotent.
 
-These are examples, not defaults. Confirm them against the current repository before applying them. Error-response conventions, layering, and framework versions are especially repository-specific.
+Confirm observed practices against the current repository; match local formatting/import style and framework/error conventions.

@@ -1,19 +1,19 @@
 ---
 name: builder-kit
 description: Explicitly invoked development harness for safely planning, building, or changing software with an agent. Use only when the user invokes Builder Kit or asks to use the Builder Kit workflow. Classify tiny fixes versus planned work, load only relevant standards and expert lenses, protect unrelated changes, require approval for non-trivial implementation, and verify the result.
+disable-model-invocation: true
 ---
 
 # Builder Kit
 
-Use this skill as a thin router. Do not load every reference.
+Use this skill as a router. Load only references triggered by the task.
 
 ## Start
 
-1. Read [profiles](../../references/workflow/profiles.md) and resolve the communication and delivery profiles.
-2. Read [task classification](../../references/workflow/task-classification.md).
-3. Inspect repository instructions, neighboring code, tests, build files, documentation, branch, and uncommitted changes.
-4. Explain the classification and proposed lens set in language appropriate to the communication profile. Let the user override optional lenses and classification.
-5. Apply the authority order in [authority and legacy guidance](../../references/workflow/authority-and-legacy.md).
+1. Resolve [profiles](../../references/workflow/profiles.md) and [task classification](../../references/workflow/task-classification.md).
+2. Read [Git Safety](../../references/workflow/git-safety.md), then inspect repository instructions, relevant code/tests/docs, branch, and status.
+3. Apply [authority and legacy guidance](../../references/workflow/authority-and-legacy.md).
+4. State the classification and optional lenses briefly; let the user override them.
 
 For a tiny fix, make the smallest coherent change when implementation is requested, then use [verification](../../references/workflow/verification.md). For planned work, read and follow [the develop-from-spec instructions](../develop-from-spec/SKILL.md) and stop at its approval gate.
 
@@ -28,20 +28,12 @@ For a tiny fix, make the smallest coherent change when implementation is request
 | Frontend styling or components        | [frontend composition](../../references/architecture/frontend-composition.md)                       |
 | Mutations, concurrency, migrations    | [reliability and evolution](../../references/architecture/reliability-and-evolution.md)             |
 | Java, frontend, Python, C++, Jenkins  | Only the matching file under `../../references/standards/`                                          |
-| Specialized platform or service work | [external capability routing](../../references/workflow/external-capabilities.md), then invoke an available owning skill |
+| Specialized platform or service work  | [external capability routing](../../references/workflow/external-capabilities.md), then invoke an available owning skill |
 | Prototype project                     | [prototype delivery](../../references/workflow/prototype-delivery.md)                               |
-| New application                       | [start-new-app instructions](../start-new-app/SKILL.md)                                             |
-| Challenge assumptions or readiness    | [adversarial-review instructions](../adversarial-review/SKILL.md)                                   |
+| New application                       | [start-new-app instructions](../start-new-app/SKILL.md)                                       |
+| Challenge assumptions or readiness    | [adversarial-review instructions](../adversarial-review/SKILL.md)                             |
 | Standard code/design review           | [standard review](../../references/lenses/standard-review.md)                                       |
-| Repeated review of current changes    | [PR review loop instructions](../pr-review-loop/SKILL.md)                                           |
+| Explicitly requested GitHub AI review | [PR review loop instructions](../pr-review-loop/SKILL.md)                                     |
 | Maintaining or releasing Builder Kit  | [release and update policy](../../references/workflow/release-and-updates.md)                       |
 
-Mandatory safety, security/privacy, accessibility, data-sustainability, authorization, and trust-boundary guidance applies when triggered even if the user declines optional lenses.
-
-## Boundaries
-
-- Do not impose Builder Kit when it was not invoked.
-- Do not replace local conventions with generic preferences.
-- Do not use persona language as a substitute for objective, constraints, success criteria, and verification.
-- Do not implement non-trivial work before explicit approval.
-- Do not discard, overwrite, stage, or absorb unrelated user work.
+Mandatory safety, security/privacy, accessibility, bounded-data, authorization, and trust-boundary guidance still applies when triggered. Never implement non-trivial work before approval, replace local conventions without cause, or disturb unrelated user work.
