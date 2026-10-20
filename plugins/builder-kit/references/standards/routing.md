@@ -2,6 +2,8 @@
 
 Use repository instructions, manifests, file types, and the changed boundary to select standards. Load only matching files, not this entire directory. These are correctness guides, not a ranking of languages or permission to replace an established stack.
 
+Separate correctness/operational constraints from contextual conventions. Use existing pinned tools; if a suggested check is unavailable, report the gap and propose adoption. Do not install tools, enable repo-wide rules, change language versions, or reformat unrelated code without approval. Apply framework/engine examples only to matching targets. Public team style is evidence for a default, not universal authority; keep the source bibliography maintainer-only.
+
 | Task or boundary | Read |
 | --- | --- |
 | TypeScript or JavaScript, browser or server | [TypeScript/JavaScript](typescript-javascript.md) |

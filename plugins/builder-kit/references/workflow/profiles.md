@@ -14,6 +14,8 @@ For `non-technical`, use ordinary language, explain necessary terms once, lead w
 
 During discovery, ask one question at a time and skip known answers. Do not ask a non-developer to choose a language or framework without first explaining a recommendation in terms of their needs and constraints.
 
+The agent owns naming, organization, tests, and appropriate abstractions; do not turn engineering implementation details into a user questionnaire. Explain meaningful product, hosting, cost, security, and maintenance choices with a reasoned recommendation, and ask only for unknowns or decisions requiring the user's authority. Plain-language communication does not reduce engineering rigor or handoff quality.
+
 ## Delivery: project-specific
 
 Values: `production` or `prototype`.

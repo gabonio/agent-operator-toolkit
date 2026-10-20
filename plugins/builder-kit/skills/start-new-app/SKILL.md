@@ -8,9 +8,9 @@ disable-model-invocation: true
 
 1. Resolve [profiles](../../references/workflow/profiles.md). Ask one plain-language question at a time, only about unknowns that change the design: users/outcomes, data/growth, platform, integrations, trust boundaries, local development, deployment, ownership, and prototype limits. When the stack is undecided or reconsideration is requested, use the [conditional stack-selection interview](../../references/workflow/specification.md#conditional-stack-selection-interview); otherwise preserve the established stack.
 2. Use [lens routing](../../references/lenses/lens-routing.md) for relevant product and engineering questions, then turn answers into decisions.
-3. Follow [develop-from-spec](../develop-from-spec/SKILL.md); require explicit approval of the proposed stack and plan before scaffolding. Load only [standards matching the approved stack](../../references/standards/routing.md).
+3. Design [cohesive capability modules and developer navigation](../../references/architecture/domain-organization.md), scaled to the app's complexity. Follow [develop-from-spec](../develop-from-spec/SKILL.md); require explicit approval of the proposed stack and plan before scaffolding. Load only [standards matching the approved stack](../../references/standards/routing.md).
 4. For specialized platform work, delegate through [external capability routing](../../references/workflow/external-capabilities.md). Deployment is separate and requires explicit authorization naming the application and environment.
-5. Establish and verify a production-like local run path. Scaffold only the approved minimum and report deferred hardening.
+5. Establish and verify a production-like local run path. Scaffold only the approved minimum, include relevant ownership/test/navigation acceptance criteria, and report deferred hardening and handoff gaps.
 6. Add [AGENTS.md](../../templates/AGENTS.md.tmpl) or [CLAUDE.md](../../templates/CLAUDE.md.tmpl) guidance only with explicit permission; merge without overwriting existing rules.
 
 Prototype projects must also read [prototype delivery](../../references/workflow/prototype-delivery.md). Never present a prototype as production-ready.

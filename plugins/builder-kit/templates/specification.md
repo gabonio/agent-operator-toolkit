@@ -31,6 +31,10 @@
 
 {{COMPONENTS_DATA_FLOW_CONTRACTS_AND_DECISIONS}}
 
+For substantive changes, name the owning business capability and vocabulary, relevant module dependencies, and the entrypoint/rule/adapter/test paths. Preserve approved local architecture; omit inapplicable structure rather than inventing layers.
+
+{{CAPABILITY_OWNERSHIP_AND_NAVIGATION_OR_EXISTING_DESIGN_LINK}}
+
 ### Stack selection (only when choosing or reconsidering a stack)
 
 Omit this subsection for work that preserves an established stack.

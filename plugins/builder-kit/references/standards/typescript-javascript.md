@@ -1,11 +1,18 @@
 # TypeScript / JavaScript Standards
 
-Follow the repository's package manager, lockfile, module system, and supported browser/runtime versions; do not force TypeScript onto JavaScript projects.
+Respect the package manager/lockfile, compiler configuration, module system, and supported browser/runtime versions. Do not convert JavaScript projects merely to apply this guide.
 
-- TypeScript types disappear at runtime. Validate untrusted JSON, environment variables, and API inputs before narrowing; prefer `unknown` and guards over unchecked assertions or `any`.
-- Preserve ESM/CommonJS and package export boundaries. Check resolution in the actual runtime/build, not only the type checker; keep browser bundles free of server-only modules and secrets.
-- Handle promise rejection at its owner; await required work and avoid async callbacks in `forEach`. Bound parallel work and account for cancellation and stale results.
-- Distinguish missing, `undefined`, `null`, zero, and empty string; use nullish defaults when falsy values are valid. Avoid mutation of shared arrays/objects through aliases.
-- Check numeric range and serialization: large integers can lose precision, `BigInt` is not directly JSON-serializable, and dates need explicit timezone/format contracts.
-- In JavaScript, use the repository's JSDoc/checking conventions for public contracts. Add type checks only through approved tooling.
-- Test boundary validation, async failures/races, and supported execution targets. For browser UI, also load [frontend standards](frontend.md).
+## Correctness and operations
+
+- Types and assertions do not validate runtime data. Parse external JSON/configuration as `unknown`, validate at entry, and narrow before use; do not hide uncertainty behind `any` or non-null assertions.
+- Distinguish missing keys from explicit `undefined`, and absent values from valid `0`, `false`, or `""`. Test dictionary/array misses and partial-update payloads, not just fully populated fixtures.
+- Await or return required promises; intentional background work still needs rejection handling and a lifetime owner. `void promise` can satisfy a lint rule but does not catch rejection. Avoid async callbacks to `forEach`; bound concurrent batches.
+- On Node request paths, bound JSON/regexp input and CPU work: `async` does not move synchronous work off the event loop. Synchronous startup/short CLI work is a different context.
+- Match ESM/CommonJS exports and runtime resolution, using type-only imports where required by the build. Type-checking alone does not prove a package can execute; test the built entrypoint. Keep server-only code/secrets out of browser bundles.
+- Define safe-integer, `BigInt` JSON, date/timezone, and serialization contracts at shared boundaries.
+
+## Checks and conventions
+
+- Run the existing typecheck, lint, tests, and target build. For a simple TS project, `tsc --noEmit` checks types; composite/build pipelines may require their configured equivalent.
+- For approved new TS configurations, prefer `strict`; assess `noUncheckedIndexedAccess` and `exactOptionalPropertyTypes` explicitly rather than assuming `strict` covers them. Stage legacy adoption; retain JavaScript JSDoc/checking conventions.
+- When typed ESLint is already available, check `@typescript-eslint/no-floating-promises`; account for its type-information cost and exceptions. Named exports and a small exported surface are useful defaults, not bans on framework-required default exports. Keep repository formatting. For UI, load [frontend standards](frontend.md).

@@ -45,6 +45,8 @@ Record the recommendation, rationale, alternatives considered, constraints, evid
 
 Capture objective, users/context, scope/non-goals, source of truth, behavior/contracts, relevant failures, triggered security/performance/compatibility concerns, verification, open decisions, and delivery profile.
 
+For substantive work, make maintainability reviewable: identify the owning capability/module and vocabulary, relevant dependency boundaries, the path from an entrypoint to its rules/adapters, and focused tests. For new apps or ownership changes, apply [domain organization](../architecture/domain-organization.md). Preserve established conventions otherwise; do not invent layers to fill a template.
+
 For data-bearing work, include volume/growth, request bounds, fields/DTO, processing location, query/index/cache behavior, trust boundary, and tests proving scope.
 
-The plan contains target areas, ordered tasks, dependencies, invariants, tests/commands, stop conditions, and evidence.
+The plan contains target areas, ordered tasks, dependencies, invariants, tests/commands, stop conditions, and evidence. Include relevant readability/ownership checks and a developer handoff through existing docs: module/entrypoint paths, run/test commands, and key decisions or explicit gaps.

@@ -9,10 +9,11 @@ disable-model-invocation: true
 Read [Git Safety](../../references/workflow/git-safety.md) before editing or publishing.
 
 1. **Discover.** Read local rules, sources of truth, relevant design, code, tests, and delivery constraints. Use [standards routing](../../references/standards/routing.md) to load only matching standards and relevant lenses. Preserve the established stack; use the specification workflow's conditional interview only when selection is unresolved or reconsideration is requested.
+   For new apps/modules or ownership changes, apply [domain organization and developer navigation](../../references/architecture/domain-organization.md); preserve approved brownfield architecture.
 2. **Specify and plan.** Follow [the specification workflow](../../references/workflow/specification.md) and repository conventions; otherwise use the [specification](../../templates/specification.md) and [plan](../../templates/implementation-plan.md) templates. Keep behavior/decisions in the specification and ordered execution in the plan.
 3. **Approve.** Large or high-risk work needs specification approval before planning. All non-trivial work needs unambiguous plan approval before implementation; bounded work may combine both approvals.
 4. **Execute coherent slices.** Preserve unrelated work, follow the plan, verify each slice, and record concise evidence. An incremental draft-PR sequence requires explicit authorization for the draft PR, bounded pushes, and reviewer invocations; plan approval alone does not authorize publication. Complete each review checkpoint before starting the next slice. Do not split tightly coupled changes merely to shrink a diff.
-5. **Verify together.** Run cross-slice checks and the closest feasible production-like build. When authorized, finish with a whole-PR review. Report exact evidence and residual risk.
+5. **Verify together.** Run cross-slice checks and the closest feasible production-like build. Check readability, capability ownership, and the developer's route to the entrypoint/rule/test. When authorized, finish with a whole-PR review. Report exact evidence, navigation/run instructions, key decisions, and residual risk without duplicating existing docs.
 
 ## Material drift
 

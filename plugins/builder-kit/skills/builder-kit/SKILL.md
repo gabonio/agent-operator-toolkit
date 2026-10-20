@@ -8,6 +8,8 @@ disable-model-invocation: true
 
 Use this skill as a router. Load only references triggered by the task.
 
+Own the engineering discipline for the user: produce readable, maintainable software with clear capability ownership and a useful developer handoff. Do not make a non-developer choose implementation trivia or imply that invoking a skill guarantees code quality.
+
 ## Start
 
 1. Resolve [profiles](../../references/workflow/profiles.md) and [task classification](../../references/workflow/task-classification.md).
@@ -27,6 +29,7 @@ For a tiny fix, make the smallest coherent change when implementation is request
 | Secrets, permissions, sensitive data  | [security and privacy](../../references/architecture/security-and-privacy.md)                       |
 | Frontend styling or components        | [frontend composition](../../references/architecture/frontend-composition.md)                       |
 | Mutations, concurrency, migrations    | [reliability and evolution](../../references/architecture/reliability-and-evolution.md)             |
+| New app/modules or ownership changes | [domain organization and developer navigation](../../references/architecture/domain-organization.md) |
 | Language, frontend, SQL, or CI work   | [standards routing](../../references/standards/routing.md), then only matching files                 |
 | Specialized platform or service work  | [external capability routing](../../references/workflow/external-capabilities.md), then invoke an available owning skill |
 | Prototype project                     | [prototype delivery](../../references/workflow/prototype-delivery.md)                               |
